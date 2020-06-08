@@ -1,0 +1,172 @@
+C51 COMPILER V9.00   MAIN                                                                  09/21/2018 13:39:18 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN ..\obj\main.obj
+COMPILER INVOKED BY: D:\software\keil\files\C51\BIN\C51.EXE ..\user\main.c BROWSE DEBUG OBJECTEXTEND PRINT(.\main.lst) T
+                    -ABS(2) OBJECT(..\obj\main.obj)
+
+line level    source
+
+   1          #include <stdio.h>
+   2          #include <reg52.h>
+   3          
+   4          typedef  unsigned char   uint8_t;
+   5          typedef  unsigned short  uint16_t;
+   6          typedef  unsigned long   uint32_t;
+   7          
+   8          //   MCU:89C52RC        11.0592MHz
+   9          
+  10          #define  SIZE   8      /* 一定要是8的倍数，因为加密和解密数据的最小单元为2个32位数据，即8个字节 */
+  11          
+  12          uint8_t    enbuffer[SIZE];
+  13          uint8_t*   key = (uint8_t*)"1234567891234567";  /* 16字节、128bit的key */
+  14          
+  15          
+  16          
+  17          /*************  串口1初始化函数 *****************/
+  18          void debug_config(void)
+  19          {
+  20   1          SCON=0x50;  //串口方式1，使能接收
+  21   1          TMOD|=0x20;  //定时器1工作方式2（8位自动重装初值）
+  22   1          TMOD&=~0x10;
+  23   1          TH1=0xfa;   //9600bps
+  24   1          TL1=0xfa;  
+  25   1          PCON|=0x80;  //SMOD=1
+  26   1          TR1=1;
+  27   1          TI=0;
+  28   1          RI=0;
+  29   1          //PS=1;   //提高串口中断优先级
+  30   1      }
+  31          
+  32          char putchar (char txdata)
+  33          {
+  34   1          SBUF = txdata;
+  35   1          while(!TI);
+  36   1          TI = 0;       
+  37   1      
+  38   1          return 0;
+  39   1      }
+  40          
+  41          
+  42          //两个32位数据，32次循环加密
+  43          static void tea_encrypt(uint32_t *v,uint32_t *k)   
+  44          {   
+  45   1          uint32_t v0=v[0], v1=v[1], sum=0, i;           /* set up, i为加密轮数 */
+  46   1          uint32_t delta=0x9e3779b9;                     /* a key schedule constant,神秘常数δ作为倍数   */
+  47   1          uint32_t k0=k[0], k1=k[1], k2=k[2], k3=k[3];   /* cache key */
+  48   1      
+  49   1          for (i=0; i < 32; i++) 
+  50   1          {  /* basic cycle start,循环加密 */
+  51   2              sum += delta;
+  52   2              v0 += ((v1<<4) + k0) ^ (v1 + sum) ^ ((v1>>5) + k1);
+  53   2              v1 += ((v0<<4) + k2) ^ (v0 + sum) ^ ((v0>>5) + k3);
+  54   2          }                                              /* end cycle */
+C51 COMPILER V9.00   MAIN                                                                  09/21/2018 13:39:18 PAGE 2   
+
+  55   1          v[0]=v0; 
+  56   1          v[1]=v1; 
+  57   1          printf("encrypt sum is %ul \r\n", sum); 
+  58   1      }  
+  59          
+  60          uint16_t encrypt(uint8_t *src, uint16_t size_src, uint8_t *key)  
+  61          {  
+  62   1          uint8_t a = 0;  
+  63   1          uint16_t i = 0;  
+  64   1          uint16_t num = 0;  
+  65   1      
+  66   1          //将明文补足为8字节的倍数  
+  67   1          a = size_src % 8;  
+  68   1          if (a != 0)  
+  69   1          {  
+  70   2              for (i = 0;i < 8 - a;i++)  
+  71   2              {  
+  72   3                  src[size_src++] = 0;  
+  73   3              }  
+  74   2          }  
+  75   1      
+  76   1          //加密  
+  77   1          num = size_src / 8;  
+  78   1          for (i = 0;i < num;i++)  
+  79   1          {  
+  80   2              tea_encrypt((uint32_t *)(src + i * 8),(uint32_t *)key);  
+  81   2          }  
+  82   1      
+  83   1          return size_src; 
+  84   1      }
+  85          
+  86          
+  87          //解密器的实现
+  88          static void tea_decrypt(uint32_t *v,uint32_t *k)   
+  89          {  
+  90   1          uint32_t v0=v[0], v1=v[1];
+  91   1          uint32_t sum = 0xC6EF3720;
+  92   1          uint32_t i = 0;  /* set up */
+  93   1          uint32_t delta=0x9e3779b9;                     /* a key schedule constant */
+  94   1          uint32_t k0=k[0], k1=k[1], k2=k[2], k3=k[3];   /* cache key */
+  95   1          for (i=0; i<32; i++) {                         /* basic cycle start */
+  96   2              v1 -= ((v0<<4) + k2) ^ (v0 + sum) ^ ((v0>>5) + k3);
+  97   2              v0 -= ((v1<<4) + k0) ^ (v1 + sum) ^ ((v1>>5) + k1);
+  98   2              sum -= delta;
+  99   2          }                                              /* end cycle */
+ 100   1          v[0]=v0; v[1]=v1; 
+ 101   1      }  
+ 102          
+ 103          uint16_t decrypt(uint8_t *src,uint16_t size_src,uint8_t *key)  
+ 104          {  
+ 105   1          uint16_t i = 0;  
+ 106   1          uint16_t num = 0;  
+ 107   1      
+ 108   1          //判断长度是否为8的倍数  
+ 109   1          if (size_src % 8 != 0)  
+ 110   1          {  
+ 111   2              return 0;  
+ 112   2          }  
+ 113   1      
+ 114   1          //解密  
+ 115   1          num = size_src / 8;  
+ 116   1          for (i = 0;i < num;i++)  
+C51 COMPILER V9.00   MAIN                                                                  09/21/2018 13:39:18 PAGE 3   
+
+ 117   1          {  
+ 118   2              tea_decrypt((uint32_t *)(src + i * 8),(uint32_t *)key);  
+ 119   2          }  
+ 120   1      
+ 121   1          return size_src;  
+ 122   1      }  
+ 123          
+ 124          
+ 125          void main(void)
+ 126          {
+ 127   1          uint16_t i=0;
+ 128   1      
+ 129   1          for(i=0; i<SIZE; i++)
+ 130   1          {
+ 131   2            /* 赋测试值 */
+ 132   2            enbuffer[i] = i+0x30;
+ 133   2          }
+ 134   1      
+ 135   1          debug_config();
+ 136   1      
+ 137   1          encrypt(enbuffer, SIZE, key);
+ 138   1          printf("encrypt data is: %s \r\n", enbuffer);
+ 139   1      
+ 140   1          decrypt(enbuffer, SIZE, key);
+ 141   1          printf("decrypt data is: %s \r\n", enbuffer);
+ 142   1          
+ 143   1          return;
+ 144   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1464    ----
+   CONSTANT SIZE    =     85    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     11     108
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,442 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        09/21/2018  13:39:18  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\SOFTWARE\KEIL\FILES\C51\BIN\BL51.EXE ..\obj\STARTUP.obj, ..\obj\main.obj TO ..\obj\tea_encrypt PRINT (.\tea_encrypt.m
+>> 51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  ..\obj\STARTUP.obj (?C_STARTUP)
+  ..\obj\main.obj (MAIN)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C_INIT)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?CSTOPTR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?ULCMP)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?ULSHR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LSHL)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LLDPTR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LLDOPTR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LSTPTR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LSTOPTR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (PRINTF)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?CSTPTR)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LLDIDATA)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LLDXDATA)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LLDPDATA)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LLDCODE)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LSTIDATA)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LSTXDATA)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?LSTPDATA)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  D:\SOFTWARE\KEIL\FILES\C51\LIB\C51S.LIB (?C?CCASE)
+
+
+LINK MAP OF MODULE:  ..\obj\tea_encrypt (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000BH     UNIT         ?DT?MAIN
+                    0013H     000DH                  *** GAP ***
+            BIT     0020H.0   0001H.1   UNIT         _BIT_GROUP_
+                    0021H.1   0000H.7                *** GAP ***
+            DATA    0022H     004AH     UNIT         _DATA_GROUP_
+            IDATA   006CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    035FH     020CH     UNIT         ?PR?_TEA_ENCRYPT?MAIN
+            CODE    056BH     0206H     UNIT         ?PR?_TEA_DECRYPT?MAIN
+            CODE    0771H     01CDH     UNIT         ?C?LIB_CODE
+            CODE    093EH     00A8H     UNIT         ?PR?_ENCRYPT?MAIN
+            CODE    09E6H     008CH     UNIT         ?C_C51STARTUP
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/21/2018  13:39:18  PAGE 2
+
+
+            CODE    0A72H     006FH     UNIT         ?PR?_DECRYPT?MAIN
+            CODE    0AE1H     006CH     UNIT         ?PR?MAIN?MAIN
+            CODE    0B4DH     0055H     UNIT         ?CO?MAIN
+            CODE    0BA2H     0019H     UNIT         ?PR?DEBUG_CONFIG?MAIN
+            CODE    0BBBH     000AH     UNIT         ?PR?_PUTCHAR?MAIN
+            CODE    0BC5H     0006H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   ..\obj\tea_encrypt (?C_STARTUP)
+
+
+SEGMENT                           BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH     START    LENGTH
+------------------------------------------------------------------
+?C_C51STARTUP                  -----    -----      -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                  -----    -----      -----    -----
+  +--> ?PR?DEBUG_CONFIG?MAIN
+  +--> ?PR?_ENCRYPT?MAIN
+  +--> ?CO?MAIN
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?_DECRYPT?MAIN
+
+?PR?_ENCRYPT?MAIN              -----    -----      0022H    000CH
+  +--> ?PR?_TEA_ENCRYPT?MAIN
+
+?PR?_TEA_ENCRYPT?MAIN          -----    -----      002EH    002AH
+  +--> ?CO?MAIN
+  +--> ?PR?PRINTF?PRINTF
+
+?PR?PRINTF?PRINTF              0020H.0  0001H.1    0058H    0014H
+  +--> ?PR?_PUTCHAR?MAIN
+
+?PR?_DECRYPT?MAIN              -----    -----      0022H    000CH
+  +--> ?PR?_TEA_DECRYPT?MAIN
+
+?PR?_TEA_DECRYPT?MAIN          -----    -----      002EH    002AH
+
+?C_INITSEG                     -----    -----      -----    -----
+  +--> ?CO?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  ..\obj\tea_encrypt (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:09E6H         SEGMENT       ?C_C51STARTUP
+  I:006CH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/21/2018  13:39:18  PAGE 3
+
+
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:09E9H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:09E6H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:09E6H         LINE#         133
+  C:09E8H         LINE#         134
+  C:09E9H         LINE#         135
+  C:09EAH         LINE#         136
+  C:09ECH         LINE#         185
+  C:09EFH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0A72H         PUBLIC        _decrypt
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  C:093EH         PUBLIC        _encrypt
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  C:056BH         SYMBOL        _tea_decrypt
+  B:0098H.1       PUBLIC        TI
+  C:035FH         SYMBOL        _tea_encrypt
+  C:0AE1H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:0008H         PUBLIC        key
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  D:000BH         PUBLIC        enbuffer
+  B:0088H.6       PUBLIC        TR1
+  C:0BA2H         PUBLIC        debug_config
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  C:0BBBH         PUBLIC        _putchar
+  -------         PROC          DEBUG_CONFIG
+  C:0BA2H         LINE#         18
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/21/2018  13:39:18  PAGE 4
+
+
+  C:0BA2H         LINE#         19
+  C:0BA2H         LINE#         20
+  C:0BA5H         LINE#         21
+  C:0BA8H         LINE#         22
+  C:0BABH         LINE#         23
+  C:0BAEH         LINE#         24
+  C:0BB1H         LINE#         25
+  C:0BB4H         LINE#         26
+  C:0BB6H         LINE#         27
+  C:0BB8H         LINE#         28
+  C:0BBAH         LINE#         30
+  -------         ENDPROC       DEBUG_CONFIG
+  -------         PROC          _PUTCHAR
+  D:0007H         SYMBOL        txdata
+  C:0BBBH         LINE#         32
+  C:0BBBH         LINE#         33
+  C:0BBBH         LINE#         34
+  C:0BBDH         LINE#         35
+  C:0BC0H         LINE#         36
+  C:0BC2H         LINE#         38
+  C:0BC4H         LINE#         39
+  -------         ENDPROC       _PUTCHAR
+  -------         PROC          _TEA_ENCRYPT
+  D:002EH         SYMBOL        v
+  D:0031H         SYMBOL        k
+  -------         DO            
+  D:0034H         SYMBOL        v0
+  D:0038H         SYMBOL        v1
+  D:003CH         SYMBOL        sum
+  D:0040H         SYMBOL        i
+  D:0044H         SYMBOL        delta
+  D:0048H         SYMBOL        k0
+  D:004CH         SYMBOL        k1
+  D:0050H         SYMBOL        k2
+  D:0054H         SYMBOL        k3
+  -------         ENDDO         
+  C:035FH         LINE#         43
+  C:0365H         LINE#         44
+  C:0365H         LINE#         45
+  C:0387H         LINE#         46
+  C:0393H         LINE#         47
+  C:03CEH         LINE#         49
+  C:03EEH         LINE#         50
+  C:03EEH         LINE#         51
+  C:0406H         LINE#         52
+  C:0490H         LINE#         53
+  C:0519H         LINE#         54
+  C:0531H         LINE#         55
+  C:0542H         LINE#         56
+  C:0556H         LINE#         57
+  -------         ENDPROC       _TEA_ENCRYPT
+  -------         PROC          _ENCRYPT
+  D:0022H         SYMBOL        src
+  D:0025H         SYMBOL        size_src
+  D:0027H         SYMBOL        key
+  -------         DO            
+  D:0007H         SYMBOL        a
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/21/2018  13:39:18  PAGE 5
+
+
+  D:002AH         SYMBOL        i
+  D:002CH         SYMBOL        num
+  -------         ENDDO         
+  C:093EH         LINE#         60
+  C:0948H         LINE#         61
+  C:0948H         LINE#         62
+  C:0949H         LINE#         63
+  C:094DH         LINE#         64
+  C:0951H         LINE#         67
+  C:0956H         LINE#         68
+  C:0958H         LINE#         69
+  C:0958H         LINE#         70
+  C:0971H         LINE#         71
+  C:0971H         LINE#         72
+  C:098AH         LINE#         73
+  C:0994H         LINE#         74
+  C:0994H         LINE#         77
+  C:09A5H         LINE#         78
+  C:09B5H         LINE#         79
+  C:09B5H         LINE#         80
+  C:09D7H         LINE#         81
+  C:09E1H         LINE#         83
+  C:09E5H         LINE#         84
+  -------         ENDPROC       _ENCRYPT
+  -------         PROC          _TEA_DECRYPT
+  D:002EH         SYMBOL        v
+  D:0031H         SYMBOL        k
+  -------         DO            
+  D:0034H         SYMBOL        v0
+  D:0038H         SYMBOL        v1
+  D:003CH         SYMBOL        sum
+  D:0040H         SYMBOL        i
+  D:0044H         SYMBOL        delta
+  D:0048H         SYMBOL        k0
+  D:004CH         SYMBOL        k1
+  D:0050H         SYMBOL        k2
+  D:0054H         SYMBOL        k3
+  -------         ENDDO         
+  C:056BH         LINE#         88
+  C:0571H         LINE#         89
+  C:0571H         LINE#         90
+  C:058AH         LINE#         91
+  C:0596H         LINE#         92
+  C:059FH         LINE#         93
+  C:05ABH         LINE#         94
+  C:05E6H         LINE#         95
+  C:0606H         LINE#         96
+  C:0691H         LINE#         97
+  C:071BH         LINE#         98
+  C:0734H         LINE#         99
+  C:074CH         LINE#         100
+  -------         ENDPROC       _TEA_DECRYPT
+  -------         PROC          _DECRYPT
+  D:0022H         SYMBOL        src
+  D:0025H         SYMBOL        size_src
+  D:0027H         SYMBOL        key
+  -------         DO            
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/21/2018  13:39:18  PAGE 6
+
+
+  D:002AH         SYMBOL        i
+  D:002CH         SYMBOL        num
+  -------         ENDDO         
+  C:0A72H         LINE#         103
+  C:0A7CH         LINE#         104
+  C:0A7CH         LINE#         105
+  C:0A81H         LINE#         106
+  C:0A85H         LINE#         109
+  C:0A8BH         LINE#         110
+  C:0A8BH         LINE#         111
+  C:0A8FH         LINE#         112
+  C:0A8FH         LINE#         115
+  C:0AA0H         LINE#         116
+  C:0AB0H         LINE#         117
+  C:0AB0H         LINE#         118
+  C:0AD2H         LINE#         119
+  C:0ADCH         LINE#         121
+  C:0AE0H         LINE#         122
+  -------         ENDPROC       _DECRYPT
+  -------         PROC          MAIN
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0AE1H         LINE#         125
+  C:0AE1H         LINE#         126
+  C:0AE1H         LINE#         127
+  C:0AE4H         LINE#         129
+  C:0AE4H         LINE#         130
+  C:0AE4H         LINE#         132
+  C:0AEEH         LINE#         133
+  C:0AF9H         LINE#         135
+  C:0AFCH         LINE#         137
+  C:0B12H         LINE#         138
+  C:0B24H         LINE#         140
+  C:0B3AH         LINE#         141
+  C:0B4CH         LINE#         144
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ?C?CSTOPTR
+  C:0771H         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+  -------         MODULE        ?C?ULCMP
+  C:0793H         PUBLIC        ?C?ULCMP
+  -------         ENDMOD        ?C?ULCMP
+
+  -------         MODULE        ?C?ULSHR
+  C:07A4H         PUBLIC        ?C?ULSHR
+  -------         ENDMOD        ?C?ULSHR
+
+  -------         MODULE        ?C?LSHL
+  C:07B7H         PUBLIC        ?C?LSHL
+  -------         ENDMOD        ?C?LSHL
+
+  -------         MODULE        ?C?LLDPTR
+  C:07CAH         PUBLIC        ?C?LLDPTR
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/21/2018  13:39:18  PAGE 7
+
+
+  -------         ENDMOD        ?C?LLDPTR
+
+  -------         MODULE        ?C?LLDOPTR
+  C:07EAH         PUBLIC        ?C?LLDOPTR
+  -------         ENDMOD        ?C?LLDOPTR
+
+  -------         MODULE        ?C?LSTPTR
+  C:081AH         PUBLIC        ?C?LSTPTR
+  -------         ENDMOD        ?C?LSTPTR
+
+  -------         MODULE        ?C?LSTOPTR
+  C:0834H         PUBLIC        ?C?LSTOPTR
+  -------         ENDMOD        ?C?LSTOPTR
+
+  -------         MODULE        PRINTF
+  D:0058H         PUBLIC        ?_PRINTF517?BYTE
+  D:0058H         PUBLIC        ?_PRINTF?BYTE
+  D:0058H         PUBLIC        ?_SPRINTF517?BYTE
+  D:0058H         PUBLIC        ?_SPRINTF?BYTE
+  C:0065H         PUBLIC        _PRINTF
+  C:0065H         PUBLIC        _PRINTF517
+  C:005FH         PUBLIC        _SPRINTF
+  C:005FH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
+
+  -------         MODULE        ?C?CLDPTR
+  C:0858H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0871H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:089EH         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?LLDIDATA
+  C:08B0H         PUBLIC        ?C?LLDIDATA
+  -------         ENDMOD        ?C?LLDIDATA
+
+  -------         MODULE        ?C?LLDXDATA
+  C:08BCH         PUBLIC        ?C?LLDXDATA
+  -------         ENDMOD        ?C?LLDXDATA
+
+  -------         MODULE        ?C?LLDPDATA
+  C:08C8H         PUBLIC        ?C?LLDPDATA
+  -------         ENDMOD        ?C?LLDPDATA
+
+  -------         MODULE        ?C?LLDCODE
+  C:08D4H         PUBLIC        ?C?LLDCODE
+  -------         ENDMOD        ?C?LLDCODE
+
+  -------         MODULE        ?C?LSTIDATA
+  C:08E4H         PUBLIC        ?C?LSTIDATA
+  -------         ENDMOD        ?C?LSTIDATA
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/21/2018  13:39:18  PAGE 8
+
+
+  -------         MODULE        ?C?LSTXDATA
+  C:08F0H         PUBLIC        ?C?LSTXDATA
+  -------         ENDMOD        ?C?LSTXDATA
+
+  -------         MODULE        ?C?LSTPDATA
+  C:08FCH         PUBLIC        ?C?LSTPDATA
+  -------         ENDMOD        ?C?LSTPDATA
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:0908H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:0918H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+Program Size: data=95.1 xdata=0 code=3019
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

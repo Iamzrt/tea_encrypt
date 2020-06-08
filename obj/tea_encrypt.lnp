@@ -1,0 +1,4 @@
+"..\obj\STARTUP.obj",
+"..\obj\main.obj" 
+TO "..\obj\tea_encrypt" 
+PRINT(".\tea_encrypt.m51") RAMSIZE(256) 
